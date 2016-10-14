@@ -17,6 +17,7 @@ public class Server {
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         serverThread = new ServerThread();
+        serverThread.start();
 
         System.out.println("Server initialized");
 
@@ -77,6 +78,7 @@ public class Server {
                         }
                     } catch (EOFException e) {
                         System.out.println("Removing client from server");
+                        serverThread.remove(client.player.id);
                         clients.remove(client);
                         break;
                     } catch (IOException e) {

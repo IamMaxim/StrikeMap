@@ -23,7 +23,7 @@ public class Player {
     }
 
     public void update() {
-
+        System.out.println("Updating player " + id + " with coords: [" + x + ", " + y + "] and team " + team);
     }
 
     enum State {
