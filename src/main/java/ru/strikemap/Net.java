@@ -13,18 +13,18 @@ public class Net {
             ACTION_SET_POS = ACTION_TO_ADD++,
             ACTION_SET_TEAM = ACTION_TO_ADD++;
 
-    public void setState(DataOutputStream dos, Player.State state) throws IOException {
+    public static void setState(DataOutputStream dos, Player.State state) throws IOException {
         dos.writeByte(ACTION_SET_STATE);
         dos.writeByte(state.ordinal());
     }
 
-    public void setPos(DataOutputStream dos, float x, float y) throws IOException {
+    public static void setPos(DataOutputStream dos, float x, float y) throws IOException {
         dos.writeByte(ACTION_SET_POS);
         dos.writeFloat(x);
         dos.writeFloat(y);
     }
 
-    public void setTeam(DataOutputStream dos, int team) throws IOException {
+    public static void setTeam(DataOutputStream dos, int team) throws IOException {
         dos.writeByte(ACTION_SET_TEAM);
         dos.writeInt(team);
     }

@@ -12,32 +12,42 @@ public class Server {
     private ServerSocket serverSocket;
     private ArrayList<Client> clients = new ArrayList<>();
     private ServerThread serverThread;
+    private Thread connectionAcceptor;
 
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         serverThread = new ServerThread();
 
-        while (!serverSocket.isClosed()) {
-            try {
-                Socket s = serverSocket.accept();
-                Client client;
-                clients.add(client = new Client(s));
-                serverThread.add(new Player(0, 0, 0));
-            } catch (IOException e) {
-                e.printStackTrace();
+        System.out.println("Server initialized");
+
+        connectionAcceptor = new Thread(() -> {
+            while (!serverSocket.isClosed()) {
+                try {
+                    Socket s = serverSocket.accept();
+                    Client client;
+                    clients.add(client = new Client(s));
+                    serverThread.add(client.player);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
+        connectionAcceptor.start();
     }
 
     public class Client {
-        public DataInputStream is;
-        public DataOutputStream os;
+        public DataInputStream dis;
+        public DataOutputStream dos;
         public Socket socket;
+        public Player player = new Player(0, 0, 0);
+        ConnectionUpdateThread connectionUpdateThread;
 
         public Client(Socket socket) throws IOException {
             this.socket = socket;
-            is = new DataInputStream(socket.getInputStream());
-            os = new DataOutputStream(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+            dos = new DataOutputStream(socket.getOutputStream());
+            connectionUpdateThread = new ConnectionUpdateThread(player);
+            connectionUpdateThread.start();
         }
 
         private class ConnectionUpdateThread extends Thread {
@@ -51,14 +61,17 @@ public class Server {
             public void run() {
                 while (!isInterrupted()) {
                     try {
-                        byte action = is.readByte();
+                        byte action = dis.readByte();
                         if (action == Net.ACTION_SET_STATE) {
-                            player.state = Player.State.values()[is.readInt()];
+                            System.out.println("Setting state");
+                            player.state = Player.State.values()[dis.readInt()];
                         } else if (action == Net.ACTION_SET_POS) {
-                            player.x = is.readFloat();
-                            player.y = is.readFloat();
+                            System.out.println("Setting position");
+                            player.x = dis.readFloat();
+                            player.y = dis.readFloat();
                         } else if (action == Net.ACTION_SET_TEAM) {
-                            player.team = is.readInt();
+                            System.out.println("Setting team");
+                            player.team = dis.readInt();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
