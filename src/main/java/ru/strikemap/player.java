@@ -22,5 +22,4 @@ public class player {
     public void setTeam(String teamname){
         this.team = teamname;
     }
-
 }
