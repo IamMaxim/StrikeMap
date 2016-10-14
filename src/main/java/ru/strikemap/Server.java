@@ -46,15 +46,17 @@ public class Server {
             this.socket = socket;
             dis = new DataInputStream(socket.getInputStream());
             dos = new DataOutputStream(socket.getOutputStream());
-            connectionUpdateThread = new ConnectionUpdateThread(player);
+            connectionUpdateThread = new ConnectionUpdateThread(this);
             connectionUpdateThread.start();
         }
 
         private class ConnectionUpdateThread extends Thread {
+            private Client client;
             private Player player;
 
-            ConnectionUpdateThread(Player player) {
-                this.player = player;
+            ConnectionUpdateThread(Client client) {
+                this.client = client;
+                this.player = client.player;
             }
 
             @Override
@@ -73,6 +75,10 @@ public class Server {
                             System.out.println("Setting team");
                             player.team = dis.readInt();
                         }
+                    } catch (EOFException e) {
+                        System.out.println("Removing client from server");
+                        clients.remove(client);
+                        break;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -23,5 +23,9 @@ public class Client {
         Net.setTeam(dos, 1);
         Net.setPos(dos, 2, 3);
         Net.setState(dos, Player.State.DEAD);
+
+        System.out.println("Closing socket");
+        socket.close();
+        System.out.println("Socket closed");
     }
 }
