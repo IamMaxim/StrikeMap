@@ -1,8 +1,6 @@
 package ru.strikemap;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -29,14 +27,37 @@ public class Server {
     }
 
     public class Client {
-        public InputStream is;
-        public OutputStream os;
+        public DataInputStream is;
+        public DataOutputStream os;
         public Socket socket;
 
         public Client(Socket socket) throws IOException {
             this.socket = socket;
-            is = socket.getInputStream();
-            os = socket.getOutputStream();
+            is = new DataInputStream(socket.getInputStream());
+            os = new DataOutputStream(socket.getOutputStream());
+        }
+
+        private class ConnectionUpdateThread extends Thread {
+            private Player player;
+
+            ConnectionUpdateThread(Player player) {
+                this.player = player;
+            }
+
+            @Override
+            public void run() {
+                while (!isInterrupted()) {
+                    try {
+                        int action = is.read();
+                        if (action == Net.ACTION_SET_STATE) {
+                            player.x = is.readFloat();
+                            player.y = is.readFloat();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }
