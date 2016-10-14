@@ -1,25 +1,34 @@
 package ru.strikemap;
 
 /**
- * Created by glebnazemnov on 14.10.16.
+ * Created by maxim on 14.10.2016.
  */
+public class Player {
+    private static int ID_TO_ADD = 0;
 
-//Каркас класса для игрока
+    public int id;
+    public float x, y;
+    public State state;
+    public int team;
 
-public class player {
-    private String namePlayer;
-    private String team;
-    private int xcoord, ycoord;
-    public static boolean isAlive(){
-        return false;
+    public Player(int team, float x, float y) {
+        id = ID_TO_ADD++;
+
+        //avoid int overflow
+        if (ID_TO_ADD == Integer.MAX_VALUE) ID_TO_ADD = 0;
+        this.team = team;
+        this.x = x;
+        this.y = y;
+        state = State.NORMAL;
     }
-    public static boolean isHaveAmmo(){
-        return false;
+
+    public void update() {
+
     }
-    public void setName(String name){
-        this.namePlayer = name;
-    }
-    public void setTeam(String teamname){
-        this.team = teamname;
+
+    enum State {
+        NORMAL,
+        DEAD,
+        INACTIVE
     }
 }
