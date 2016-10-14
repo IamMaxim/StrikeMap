@@ -11,15 +11,18 @@ import java.util.ArrayList;
 public class Server {
     private ServerSocket serverSocket;
     private ArrayList<Client> clients = new ArrayList<>();
+    private ServerThread serverThread;
 
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
+        serverThread = new ServerThread();
 
         while (!serverSocket.isClosed()) {
             try {
                 Socket s = serverSocket.accept();
                 Client client;
                 clients.add(client = new Client(s));
+                serverThread.add(new Player(0, 0, 0));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -48,10 +51,14 @@ public class Server {
             public void run() {
                 while (!isInterrupted()) {
                     try {
-                        int action = is.read();
+                        byte action = is.readByte();
                         if (action == Net.ACTION_SET_STATE) {
+                            player.state = Player.State.values()[is.readInt()];
+                        } else if (action == Net.ACTION_SET_POS) {
                             player.x = is.readFloat();
                             player.y = is.readFloat();
+                        } else if (action == Net.ACTION_SET_TEAM) {
+                            player.team = is.readInt();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
