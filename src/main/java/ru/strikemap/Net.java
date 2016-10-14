@@ -14,6 +14,7 @@ public class Net {
             ACTION_SET_TEAM = ACTION_TO_ADD++;
 
     public void setState(DataOutputStream dos, Player.State state) throws IOException {
+        dos.writeByte(ACTION_SET_STATE);
         dos.writeByte(state.ordinal());
     }
 
@@ -21,4 +22,6 @@ public class Net {
         dos.writeFloat(x);
         dos.writeFloat(y);
     }
+
+
 }
