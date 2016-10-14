@@ -16,12 +16,14 @@ public class Player {
 
         //avoid int overflow
         if (ID_TO_ADD == Integer.MAX_VALUE) ID_TO_ADD = 0;
+
         this.team = team;
         this.x = x;
         this.y = y;
         state = State.NORMAL;
     }
 
+    //this method is called on server in loop
     public void update() {
         System.out.println("Updating player " + id + " with coords: [" + x + ", " + y + "] and team " + team);
     }

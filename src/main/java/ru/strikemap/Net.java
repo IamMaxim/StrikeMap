@@ -9,7 +9,9 @@ import java.io.IOException;
 public class Net {
     private static int ACTION_TO_ADD = 0;
 
-    public static final int ACTION_SET_STATE = ACTION_TO_ADD++,
+    //codes for actions
+    public static final int
+            ACTION_SET_STATE = ACTION_TO_ADD++,
             ACTION_SET_POS = ACTION_TO_ADD++,
             ACTION_SET_TEAM = ACTION_TO_ADD++;
 

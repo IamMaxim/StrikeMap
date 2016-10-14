@@ -37,10 +37,13 @@ public class Server {
     }
 
     public class Client {
+        //streams for transferring data
         public DataInputStream dis;
         public DataOutputStream dos;
         public Socket socket;
+        //on-server player object
         public Player player = new Player(0, 0, 0);
+        //update data in background
         ConnectionUpdateThread connectionUpdateThread;
 
         public Client(Socket socket) throws IOException {
@@ -64,6 +67,7 @@ public class Server {
             public void run() {
                 while (!isInterrupted()) {
                     try {
+                        //read updates from client
                         byte action = dis.readByte();
                         if (action == Net.ACTION_SET_STATE) {
                             System.out.println("Setting state");
@@ -77,7 +81,10 @@ public class Server {
                             player.team = dis.readInt();
                         }
                     } catch (EOFException e) {
+                        //EOF means socket is closed
                         System.out.println("Removing client from server");
+
+                        //cleanup player lists
                         serverThread.remove(client.player.id);
                         clients.remove(client);
                         break;

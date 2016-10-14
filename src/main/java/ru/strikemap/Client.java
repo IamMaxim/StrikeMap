@@ -20,6 +20,7 @@ public class Client {
 
         System.out.println("Client initialized");
 
+        //Debug functions
         Net.setTeam(dos, 1);
         Net.setPos(dos, 2, 3);
         Net.setState(dos, Player.State.DEAD);
