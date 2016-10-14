@@ -19,9 +19,13 @@ public class Net {
     }
 
     public void setPos(DataOutputStream dos, float x, float y) throws IOException {
+        dos.writeByte(ACTION_SET_POS);
         dos.writeFloat(x);
         dos.writeFloat(y);
     }
 
-
+    public void setTeam(DataOutputStream dos, int team) throws IOException {
+        dos.writeByte(ACTION_SET_TEAM);
+        dos.writeInt(team);
+    }
 }

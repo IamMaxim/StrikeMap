@@ -14,7 +14,7 @@ public class Player {
     public Player(int team, float x, float y) {
         id = ID_TO_ADD++;
 
-//avoid int overflow
+        //avoid int overflow
         if (ID_TO_ADD == Integer.MAX_VALUE) ID_TO_ADD = 0;
         this.team = team;
         this.x = x;
