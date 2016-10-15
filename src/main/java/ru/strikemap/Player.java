@@ -6,10 +6,16 @@ package ru.strikemap;
 public class Player {
     private static int ID_TO_ADD = 0;
 
+    public String name;
     public int id;
     public float x, y;
     public State state;
     public int team;
+
+    public void setPos(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public Player(int team, float x, float y) {
         id = ID_TO_ADD++;
@@ -21,6 +27,7 @@ public class Player {
         this.x = x;
         this.y = y;
         state = State.NORMAL;
+        this.name = "Player" + (int)(Math.random() * 1000);
     }
 
     //this method is called on server in loop

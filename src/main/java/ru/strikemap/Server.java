@@ -3,6 +3,7 @@ package ru.strikemap;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 /**
@@ -65,6 +66,9 @@ public class Server {
 
             @Override
             public void run() {
+                //send init data to all clients
+                
+
                 while (!isInterrupted()) {
                     try {
                         //read updates from client
@@ -80,7 +84,7 @@ public class Server {
                             System.out.println("Setting team");
                             player.team = dis.readInt();
                         }
-                    } catch (EOFException e) {
+                    } catch (EOFException | SocketException e) {
                         //EOF means socket is closed
                         System.out.println("Removing client from server");
 
