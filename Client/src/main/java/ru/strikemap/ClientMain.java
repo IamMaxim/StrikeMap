@@ -24,6 +24,8 @@ public class ClientMain {
                     Net.sendTeamToServer(client.dos, Integer.parseInt(tokens[1]));
                 } else if (command.equals("setPos")) {
                     Net.sendCoordToServer(client.dos, Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2]));
+                } else if (command.equals("disconnect")) {
+                    client.socket.close();
                 }
             }
         } catch (IOException e) {

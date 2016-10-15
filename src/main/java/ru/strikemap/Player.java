@@ -38,6 +38,6 @@ public class Player {
     enum State {
         NORMAL,
         DEAD,
-        INACTIVE
+        COVER
     }
 }
