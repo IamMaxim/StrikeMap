@@ -5,8 +5,8 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
-      <element id="module-output" name="Server" />
-      <element id="module-output" name="StrikeMap" />
+      <element id="module-output" name="Server_main" />
+      <element id="module-output" name="StrikeMap_main" />
     </root>
   </artifact>
 </component>
