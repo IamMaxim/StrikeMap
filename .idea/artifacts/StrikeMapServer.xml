@@ -2,10 +2,11 @@
   <artifact type="jar" name="StrikeMapServer">
     <output-path>$PROJECT_DIR$/out/artifacts/StrikeMapServer</output-path>
     <root id="archive" name="StrikeMapServer.jar">
-      <element id="module-output" name="StrikeMap_main" />
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
+      <element id="module-output" name="Server" />
+      <element id="module-output" name="StrikeMap" />
     </root>
   </artifact>
 </component>

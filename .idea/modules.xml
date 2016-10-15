@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Client.iml" filepath="$PROJECT_DIR$/.idea/modules/Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Client_main.iml" group="Client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Client_test.iml" group="Client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Server.iml" filepath="$PROJECT_DIR$/.idea/modules/Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Server_main.iml" group="Server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Server_test.iml" group="Server" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StrikeMap.iml" filepath="$PROJECT_DIR$/.idea/modules/StrikeMap.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StrikeMap_main.iml" filepath="$PROJECT_DIR$/.idea/modules/StrikeMap_main.iml" group="StrikeMap" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StrikeMap_test.iml" filepath="$PROJECT_DIR$/.idea/modules/StrikeMap_test.iml" group="StrikeMap" />

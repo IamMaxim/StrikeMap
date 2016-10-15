@@ -19,6 +19,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Client_main" target="1.8" />
+      <module name="Client_test" target="1.8" />
+      <module name="Server_main" target="1.8" />
+      <module name="Server_test" target="1.8" />
       <module name="StrikeMap_main" target="1.8" />
       <module name="StrikeMap_test" target="1.8" />
     </bytecodeTargetLevel>
