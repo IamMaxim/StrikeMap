@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Server {
     private ServerSocket serverSocket;
-    private ArrayList<Client> clients = new ArrayList<>();
+    private volatile ArrayList<Client> clients = new ArrayList<>();
     private ServerThread serverThread;
     private Thread connectionAcceptor;
 
@@ -68,7 +68,24 @@ public class Server {
             @Override
             public void run() {
                 //send init data to all clients
-                
+                System.out.println("trying to send new client to others");
+                clients.forEach(c -> {
+                    try {
+                        if (c != client) {
+                            System.out.println("Trying to send client to " + c.player.name);
+                            Net.sendClientConnected(c.dos, client.player.id, client.player.name);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                clients.forEach(c -> {
+                    try {
+                        Net.sendClientConnected(client.dos, c.player.id, c.player.name);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
                 while (!isInterrupted()) {
                     try {
@@ -79,21 +96,66 @@ public class Server {
                             Player.State state = Player.State.values()[dis.readInt()];
                             System.out.println("Setting state " + state.toString());
                             player.state = state;
+                            clients.forEach(c -> {
+                                try {
+                                    Net.sendStateToClient(c.dos, player.id, player.state);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
                         } else if (action == Net.ACTION_SET_POS) {
                             player.x = dis.readFloat();
                             player.y = dis.readFloat();
                             System.out.println("Setting position to " + player.x + " " + player.y);
+                            clients.forEach(c -> {
+                                try {
+                                    Net.sendCoordsToClient(c.dos, player.id, player.x, player.y);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
                         } else if (action == Net.ACTION_SET_TEAM) {
                             player.team = dis.readInt();
                             System.out.println("Setting team to " + player.team);
+                            clients.forEach(c -> {
+                                try {
+                                    Net.sendTeamToClient(c.dos, player.id, player.team);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        } else if (action == Net.ACTION_SET_NAME) {
+                            String name = client.dis.readUTF();
+                            clients.forEach(c -> {
+                                try {
+                                    Net.sendNameToClient(c.dos, player.id, name);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
                         }
                     } catch (EOFException | SocketException e) {
                         //EOF means socket is closed
-                        System.out.println("Removing client from server");
+                        System.out.println("Removing client " + client.player.name + " from server");
+
+                        try {
+                            client.socket.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
 
                         //cleanup player lists
                         serverThread.remove(client.player.id);
                         clients.remove(client);
+
+                        //remove client from others
+                        clients.forEach(c -> {
+                            try {
+                                Net.sendRemoveClient(c.dos, client.player.id);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        });
                         break;
                     } catch (IOException e) {
                         e.printStackTrace();

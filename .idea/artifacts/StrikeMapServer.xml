@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="StrikeMapServer">
+    <output-path>$PROJECT_DIR$/</output-path>
+    <root id="archive" name="StrikeMapServer.jar">
+      <element id="module-output" name="Server_main" />
+      <element id="module-output" name="StrikeMap" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Server/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
