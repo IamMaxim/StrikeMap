@@ -26,9 +26,11 @@ public class Client {
         System.out.println("Client initialized");
 
         //Debug functions
+        /*
         Net.sendTeamToServer(dos, 1);
         Net.sendCoordToServer(dos, 2, 3);
         Net.sendStateToServer(dos, Player.State.DEAD);
+        */
 
         /*
         System.out.println("Closing socket");

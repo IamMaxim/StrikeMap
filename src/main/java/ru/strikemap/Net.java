@@ -21,7 +21,7 @@ public class Net {
 
     public static void sendStateToServer(DataOutputStream dos, Player.State state) throws IOException {
         dos.writeByte(ACTION_SET_STATE);
-        dos.writeByte(state.ordinal());
+        dos.writeInt(state.ordinal());
     }
 
     public static void sendCoordToServer(DataOutputStream dos, float x, float y) throws IOException {

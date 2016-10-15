@@ -28,6 +28,7 @@ public class Server {
                     Socket s = serverSocket.accept();
                     Client client;
                     clients.add(client = new Client(s));
+                    System.out.println("Client " + client.player.name + " connected");
                     serverThread.add(client.player);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -73,16 +74,18 @@ public class Server {
                     try {
                         //read updates from client
                         byte action = dis.readByte();
+                        System.out.println("Received action " + action);
                         if (action == Net.ACTION_SET_STATE) {
-                            System.out.println("Setting state");
-                            player.state = Player.State.values()[dis.readInt()];
+                            Player.State state = Player.State.values()[dis.readInt()];
+                            System.out.println("Setting state " + state.toString());
+                            player.state = state;
                         } else if (action == Net.ACTION_SET_POS) {
-                            System.out.println("Setting position");
                             player.x = dis.readFloat();
                             player.y = dis.readFloat();
+                            System.out.println("Setting position to " + player.x + " " + player.y);
                         } else if (action == Net.ACTION_SET_TEAM) {
-                            System.out.println("Setting team");
                             player.team = dis.readInt();
+                            System.out.println("Setting team to " + player.team);
                         }
                     } catch (EOFException | SocketException e) {
                         //EOF means socket is closed
