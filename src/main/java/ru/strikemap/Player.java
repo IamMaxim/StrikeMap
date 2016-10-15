@@ -25,7 +25,7 @@ public class Player {
 
     //this method is called on server in loop
     public void update() {
-        System.out.println("Updating player " + id + " with coords: [" + x + ", " + y + "] and team " + team);
+        //System.out.println("Updating player " + id + " with coords: [" + x + ", " + y + "] and team " + team);
     }
 
     enum State {
