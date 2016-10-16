@@ -68,11 +68,11 @@ public class Server {
             @Override
             public void run() {
                 //send init data to all clients
-                System.out.println("trying to send new client to others");
+                //System.out.println("trying to send new client to others");
                 clients.forEach(c -> {
                     try {
                         if (c != client) {
-                            System.out.println("Trying to send client to " + c.player.name);
+                            //System.out.println("Trying to send client to " + c.player.name);
                             Net.sendClientConnected(c.dos, client.player.id, client.player.name);
                         }
                     } catch (IOException e) {

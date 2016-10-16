@@ -36,7 +36,7 @@ public class Net {
     }
 
     public static void sendClientConnected(DataOutputStream dos, int id, String name) throws IOException {
-        System.out.println("sending ADD_CLIENT");
+        //System.out.println("sending ADD_CLIENT");
         dos.writeByte(Net.ACTION_ADD_CLIENT);
         dos.writeInt(id);
         dos.writeUTF(name);
