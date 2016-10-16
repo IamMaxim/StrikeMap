@@ -79,9 +79,13 @@ public class Server {
                         e.printStackTrace();
                     }
                 });
+                //send all data to new client
                 clients.forEach(c -> {
                     try {
                         Net.sendClientConnected(client.dos, c.player.id, c.player.name);
+                        Net.sendCoordsToClient(client.dos, c.player.id, c.player.x, c.player.y);
+                        Net.sendNameToClient(client.dos, c.player.id, c.player.name);
+                        Net.sendStateToClient(client.dos, c.player.id, c.player.state);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -126,6 +130,7 @@ public class Server {
                             });
                         } else if (action == Net.ACTION_SET_NAME) {
                             String name = client.dis.readUTF();
+                            client.player.name = name;
                             clients.forEach(c -> {
                                 try {
                                     Net.sendNameToClient(c.dos, player.id, name);

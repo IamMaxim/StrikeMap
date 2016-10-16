@@ -19,12 +19,22 @@ public class Client implements Serializable {
 
     public volatile HashMap<Integer, Player> players = new HashMap<>();
 
-    public Client(String ip, int port) throws IOException {
-        socket = new Socket(ip, port);
-        dos = new DataOutputStream(socket.getOutputStream());
-        dis = new DataInputStream(socket.getInputStream());
-        clientThread = new ClientThread(this);
-        clientThread.start();
-        System.out.println("Client initialized");
+    public Client(final String ip, final int port) throws IOException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("trying to connect to " + ip + ":" + port);
+                    socket = new Socket(ip, port);
+                    dos = new DataOutputStream(socket.getOutputStream());
+                    dis = new DataInputStream(socket.getInputStream());
+                    clientThread = new ClientThread(Client.this);
+                    clientThread.start();
+                    System.out.println("Client initialized");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
